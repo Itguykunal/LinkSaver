@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  bookmarks Bookmark[]
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  url       String
+  title     String
+  favicon   String
+  summary   String   // Remove @db.Text - SQLite handles this automatically
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}

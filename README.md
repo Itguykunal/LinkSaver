@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔖 Link Saver - AI-Powered Bookmark Manager
 
-## Getting Started
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma" alt="Prisma" />
+</div>
 
-First, run the development server:
+<div align="center">
+  <h3>Save bookmarks with AI-generated summaries</h3>
+  <p>A modern full-stack bookmark management application built with Next.js 14, featuring secure authentication and automatic content summarization.</p>
+</div>
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- 🔐 **Secure Authentication** - JWT tokens with bcrypt password hashing
+- 🤖 **AI Summaries** - Automatic content summarization using Jina AI (no API key required!)
+- 🌓 **Dark Mode** - Beautiful light and dark themes
+- 🔍 **Smart Search** - Search through bookmarks by title, URL, or summary
+- 📱 **Responsive Design** - Works perfectly on desktop, tablet, and mobile
+- ⚡ **Real-time Updates** - Instant UI updates when adding/deleting bookmarks
+- 🎨 **Modern UI** - Clean, intuitive interface built with Tailwind CSS
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Live Demo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Check out the live demo: [https://link-saver-itguykunal.vercel.app](https://link-saver-itguykunal.vercel.app)
 
-## Learn More
+**Demo Credentials:**
+- Email: `test@example.com`
+- Password: `password123`
 
-To learn more about Next.js, take a look at the following resources:
+## 📸 Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<div align="center">
+  <img src="./screenshots/login.png" alt="Login Screen" width="400" />
+  <img src="./screenshots/dashboard.png" alt="Dashboard" width="400" />
+</div>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack
 
-## Deploy on Vercel
+- **Frontend:** Next.js 14, React 19, Tailwind CSS
+- **Backend:** Next.js API Routes
+- **Database:** SQLite with Prisma ORM
+- **Authentication:** JWT + bcryptjs
+- **AI Integration:** Jina AI Reader API
+- **Deployment:** Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📦 Installation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/itguykunal/link-saver.git
+   cd link-saver
