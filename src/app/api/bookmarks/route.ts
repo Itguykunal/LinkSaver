@@ -63,7 +63,7 @@ export async function POST(request: Request) {
       url,
       title,
       favicon: favicon || '',
-      summary,
+      summary: summary || '',  // Add this fix
       userId: user.id
     }
   });
