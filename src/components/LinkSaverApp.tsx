@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Eye, EyeOff, Plus, Trash2, Search, Moon, Sun, ExternalLink } from 'lucide-react';
 
 interface User {
@@ -369,26 +369,32 @@ const Dashboard: React.FC<{
   const [newUrl, setNewUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const bookmarksRef = useRef<Bookmark[]>([]);
+
+  // Update ref whenever bookmarks change
+  useEffect(() => {
+    bookmarksRef.current = bookmarks;
+  }, [bookmarks]);
 
   const loadBookmarks = useCallback(async () => {
     const userBookmarks = await api.getBookmarks(user.id, token);
     setBookmarks(userBookmarks);
   }, [user.id, token]);
 
-// In the Dashboard component, update the useEffect:
+// FIXED useEffect - removed bookmarks from dependency array
 useEffect(() => {
   loadBookmarks();
   
   // Poll for processing bookmarks
   const interval = setInterval(() => {
-    const hasProcessing = bookmarks.some(b => b.status === 'processing');
+    const hasProcessing = bookmarksRef.current.some(b => b.status === 'processing');
     if (hasProcessing) {
       loadBookmarks();
     }
   }, 3000); // Check every 3 seconds
   
   return () => clearInterval(interval);
-}, [loadBookmarks, bookmarks]);
+}, [loadBookmarks]); // Only depend on loadBookmarks, not bookmarks!
 
   const handleAddBookmark = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();

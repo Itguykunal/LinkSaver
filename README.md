@@ -57,16 +57,15 @@ npm install
 
 ### Environment Variables
 
-Create `.env.local` file:
+Create `.env` file:
 
 ```bash
-cp .env.example .env.local
+touch .env
 ```
 
-Update your `.env.local`:
+Update your `.env`:
 
 ```env
-JWT_SECRET=your-secret-key
 DATABASE_URL="file:./dev.db"
 ```
 
@@ -116,7 +115,6 @@ link-saver/
 │   └── lib/               # Utility & helper functions
 ├── prisma/                # Database schema & seed
 ├── public/                # Static files
-└── tests/                 # Unit & integration tests
 ```
 
 ---
