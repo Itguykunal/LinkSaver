@@ -1,6 +1,7 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Eye, EyeOff, Plus, Trash2, Search, Moon, Sun, ExternalLink } from 'lucide-react';
+import Image from 'next/image';
 
 interface User {
   id: number;
@@ -29,6 +30,7 @@ const api = {
       const data = await response.json();
       return data;
     } catch (error) {
+      console.error('Register error:', error);
       return { error: 'Network error' };
     }
   },
@@ -43,6 +45,7 @@ const api = {
       const data = await response.json();
       return data;
     } catch (error) {
+      console.error('Login error:', error);
       return { error: 'Network error' };
     }
   },
@@ -218,6 +221,7 @@ const AuthForm: React.FC<{ onLogin: (user: User, token: string) => void }> = ({ 
         }
       }
     } catch (err) {
+      console.error('Auth error:', err);
       setError('An error occurred. Please try again.');
     }
     setLoading(false);
@@ -334,10 +338,12 @@ const BookmarkCard: React.FC<{
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3 flex-1 min-w-0">
           {!imageError ? (
-            <img
+            <Image
               src={bookmark.favicon}
               alt=""
-              className="w-8 h-8 rounded-full flex-shrink-0"
+              width={32}
+              height={32}
+              className="rounded-full flex-shrink-0"
               onError={() => setImageError(true)}
             />
           ) : (
@@ -399,14 +405,14 @@ const Dashboard: React.FC<{
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    loadBookmarks();
-  }, [user]);
-
-  const loadBookmarks = async () => {
+  const loadBookmarks = useCallback(async () => {
     const userBookmarks = await api.getBookmarks(user.id, token);
     setBookmarks(userBookmarks);
-  };
+  }, [user.id, token]);
+
+  useEffect(() => {
+    loadBookmarks();
+  }, [loadBookmarks]);
 
   const handleAddBookmark = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();

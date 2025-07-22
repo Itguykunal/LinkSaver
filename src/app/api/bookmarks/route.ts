@@ -2,8 +2,23 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import jwt from 'jsonwebtoken';
 
+// Define proper types instead of using 'any'
+interface JWTPayload {
+  id: number;
+  email?: string;
+  iat?: number;
+  exp?: number;
+}
+
+interface BookmarkCreateData {
+  url: string;
+  title: string;
+  favicon?: string;
+  summary?: string;
+}
+
 // Helper to verify JWT and get user
-async function getUserFromToken(request: Request) {
+async function getUserFromToken(request: Request): Promise<JWTPayload | null> {
   const authHeader = request.headers.get('authorization');
   if (!authHeader?.startsWith('Bearer ')) {
     return null;
@@ -11,7 +26,8 @@ async function getUserFromToken(request: Request) {
   
   const token = authHeader.split(' ')[1];
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-for-dev') as any;
+    // Replace 'as any' with proper type casting
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret-for-dev') as JWTPayload;
     return decoded;
   } catch {
     return null;
@@ -40,7 +56,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   
-  const { url, title, favicon, summary } = await request.json();
+  const { url, title, favicon, summary }: BookmarkCreateData = await request.json();
   
   const bookmark = await prisma.bookmark.create({
     data: {
