@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import jwt from 'jsonwebtoken';
+import { getFaviconUrl } from '@/lib/favicon'
 
 // Define proper types instead of using 'any'
 interface JWTPayload {
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
     data: {
       url,
       title,
-      favicon: favicon || '',
+      favicon: favicon || getFaviconUrl(url, 32),
       summary: summary || '',  // Add this fix
       userId: user.id
     }

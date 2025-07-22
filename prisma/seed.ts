@@ -31,17 +31,24 @@ async function main() {
   await prisma.bookmark.createMany({
     data: [
       {
-        url: 'https://github.com',
-        title: 'GitHub',
+        url: 'https://github.com/itguykunal',
+        title: 'My GitHub Profile',
         favicon: 'https://github.com/favicon.ico',
         summary: 'GitHub is where people build software.',
         userId: demoUser.id
       },
       {
-        url: 'https://stackoverflow.com',
-        title: 'Stack Overflow',
-        favicon: 'https://stackoverflow.com/favicon.ico',
-        summary: 'Stack Overflow is the largest online community for developers.',
+        url: 'https://leetcode.com/u/iTGuyKunal/',
+        title: 'My leetcode Profile',
+        favicon: 'https://leetcode.com/favicon.ico',
+        summary: 'LeetCode is the best platform to help you enhance your skills.',
+        userId: demoUser.id
+      },
+      {
+        url: 'https://linkedin.com/in/itguykunal',
+        title: 'My Linkedin Profile',
+        favicon: 'https://linkedin.com/favicon.ico',
+        summary: 'job searching, building a professional brand.',
         userId: demoUser.id
       }
     ]

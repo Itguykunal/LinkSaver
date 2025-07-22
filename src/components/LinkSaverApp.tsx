@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Eye, EyeOff, Plus, Trash2, Search, Moon, Sun, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
+import { getFaviconUrl } from '@/lib/favicon'
 
 interface User {
   id: number;
