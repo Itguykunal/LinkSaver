@@ -13,6 +13,7 @@ interface Bookmark {
   title: string;
   favicon: string;
   summary: string;
+  status?: string; // Add this line
   userId: number;
   createdAt: string;
 }
@@ -61,73 +62,8 @@ const api = {
     }
   },
   
-  async getSummary(url: string) {
-    try {
-      // Remove the protocol from the URL for Jina AI
-      let cleanUrl = url;
-      if (url.startsWith('https://')) {
-        cleanUrl = url.substring(8);
-      } else if (url.startsWith('http://')) {
-        cleanUrl = url.substring(7);
-      }
-      
-      // Encode the URL
-      const encodedUrl = encodeURIComponent(cleanUrl);
-      
-      // Call Jina AI endpoint
-      const response = await fetch(`https://r.jina.ai/${encodedUrl}`);
-      
-      if (response.ok) {
-        const content = await response.text();
-        
-        // Try to find the first meaningful sentence
-        // Split by newlines and filter out metadata
-        const lines = content.split('\n')
-          .map(line => line.trim())
-          .filter(line => {
-            // Skip metadata lines
-            if (line.toLowerCase().includes('title:')) return false;
-            if (line.toLowerCase().includes('url source:')) return false;
-            if (line.toLowerCase().includes('markdown content:')) return false;
-            if (line.includes('===') || line.includes('---')) return false;
-            if (line.startsWith('![')) return false;
-            if (line.startsWith('#')) return false;
-            if (line.length < 20) return false;
-            // Skip navigation/footer text
-            if (line.includes('©') || line.includes('Sign Up') || line.includes('Log In')) return false;
-            return true;
-          });
-        
-        // Get the first meaningful line
-        if (lines.length > 0) {
-          // Clean up markdown formatting
-          let summary = lines[0]
-            .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Remove links
-            .replace(/[*_~`#]/g, '') // Remove markdown symbols
-            .trim();
-          
-          // Ensure it ends with a period
-          if (summary && !summary.endsWith('.')) {
-            summary += '.';
-          }
-          
-          return summary || 'No description available.';
-        }
-        
-        return 'No description available.';
-      }
-      
-      return 'Summary temporarily unavailable.';
-    } catch (error) {
-      console.error('Error fetching summary:', error);
-      return 'Summary temporarily unavailable.';
-    }
-  },
-  
   async saveBookmark(url: string, userId: number, token: string) {
-    const metadata = await this.fetchMetadata(url);
-    const summary = await this.getSummary(url);
-    
+
     try {
       const response = await fetch('/api/bookmarks', {
         method: 'POST',
@@ -135,12 +71,7 @@ const api = {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({
-          url,
-          title: metadata.title,
-          favicon: metadata.favicon,
-          summary
-        })
+        body: JSON.stringify({ url })  // Only send URL now
       });
       
       if (!response.ok) throw new Error('Failed to save bookmark');
@@ -399,10 +330,18 @@ const BookmarkCard: React.FC<{
           <Trash2 size={18} />
         </button>
       </div>
-
-      <div className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
-        {bookmark.summary}
-      </div>
+<div className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-4">
+  {bookmark.status === 'processing' ? (
+    <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400">
+      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+      <span>Generating summary...</span>
+    </div>
+  ) : bookmark.status === 'failed' ? (
+    <span className="text-red-500 dark:text-red-400">Summary unavailable</span>
+  ) : (
+    bookmark.summary
+  )}
+</div>
 
       <div className="flex justify-between items-center text-xs text-gray-500 dark:text-gray-400">
         <span>Saved {new Date(bookmark.createdAt).toLocaleDateString()}</span>
@@ -436,9 +375,20 @@ const Dashboard: React.FC<{
     setBookmarks(userBookmarks);
   }, [user.id, token]);
 
-  useEffect(() => {
-    loadBookmarks();
-  }, [loadBookmarks]);
+// In the Dashboard component, update the useEffect:
+useEffect(() => {
+  loadBookmarks();
+  
+  // Poll for processing bookmarks
+  const interval = setInterval(() => {
+    const hasProcessing = bookmarks.some(b => b.status === 'processing');
+    if (hasProcessing) {
+      loadBookmarks();
+    }
+  }, 3000); // Check every 3 seconds
+  
+  return () => clearInterval(interval);
+}, [loadBookmarks, bookmarks]);
 
   const handleAddBookmark = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();

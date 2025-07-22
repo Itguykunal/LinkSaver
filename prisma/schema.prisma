@@ -1,3 +1,4 @@
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -20,7 +21,8 @@ model Bookmark {
   url       String
   title     String
   favicon   String
-  summary   String   // Remove @db.Text - SQLite handles this automatically
+  summary   String   @default("")
+  status    String   @default("processing") // Add this line
   userId    Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
