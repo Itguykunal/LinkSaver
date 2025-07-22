@@ -21,7 +21,7 @@
 
 ## 🚀 Live Demo
 
-👉 click here for DEMO [https://linksaver-production.up.railway.app/]
+👉 [Click here for DEMO](https://linksaver-production.up.railway.app/)
 
 🧪 **Test Credentials:**
 - Email: `test@example.com`
