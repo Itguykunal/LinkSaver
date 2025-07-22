@@ -1,61 +1,191 @@
-# 🔖 Link Saver - AI-Powered Bookmark Manager
+````markdown
+# 🔖 Link Saver – AI-Powered Bookmark Manager
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js" alt="Next.js" />
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind" />
-  <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma" alt="Prisma" />
+  <img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react" />
+  <img src="https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css" />
+  <img src="https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma" />
 </div>
 
-<div align="center">
-  <h3>Save bookmarks with AI-generated summaries</h3>
-  <p>A modern full-stack bookmark management application built with Next.js 14, featuring secure authentication and automatic content summarization.</p>
-</div>
+> Save your favorite links with automatic AI summaries and organize them with a clean, modern UI.
+
+---
 
 ## ✨ Features
 
-- 🔐 **Secure Authentication** - JWT tokens with bcrypt password hashing
-- 🤖 **AI Summaries** - Automatic content summarization using Jina AI (no API key required!)
-- 🌓 **Dark Mode** - Beautiful light and dark themes
-- 🔍 **Smart Search** - Search through bookmarks by title, URL, or summary
-- 📱 **Responsive Design** - Works perfectly on desktop, tablet, and mobile
-- ⚡ **Real-time Updates** - Instant UI updates when adding/deleting bookmarks
-- 🎨 **Modern UI** - Clean, intuitive interface built with Tailwind CSS
+- 🔐 **Secure Login & JWT Auth**
+- 🤖 **AI-Powered Summaries** via Jina AI (no API key needed!)
+- 🔍 **Full-Text Smart Search**
+- 🌙 **Dark Mode Support**
+- ⚡ **Realtime UI Updates**
+- 📱 **Mobile-Friendly Design**
+- 🧠 **Built with Clean, Scalable Tech Stack**
+
+---
 
 ## 🚀 Live Demo
 
-Check out the live demo: [https://link-saver-itguykunal.vercel.app](https://link-saver-itguykunal.vercel.app)
+👉 [https://link-saver-itguykunal.vercel.app](https://link-saver-itguykunal.vercel.app)
 
-**Demo Credentials:**
+🧪 **Test Credentials:**
 - Email: `test@example.com`
 - Password: `password123`
 
-## 📸 Screenshots
 
-<div align="center">
-  <img src="./screenshots/login.png" alt="Login Screen" width="400" />
-  <img src="./screenshots/dashboard.png" alt="Dashboard" width="400" />
-</div>
+## ⚙️ Tech Stack
 
-## 🛠️ Tech Stack
+| Area         | Technology                  |
+|--------------|-----------------------------|
+| Frontend     | **Next.js 14**, **React 19**, **Tailwind CSS** |
+| Backend      | **Next.js API Routes**      |
+| Database     | **SQLite (dev)** + Prisma ORM |
+| Auth         | **JWT**, **bcrypt**         |
+| AI Summary   | **Jina AI Reader API**      |
+| Deployment   | **Vercel**                  |
 
-- **Frontend:** Next.js 14, React 19, Tailwind CSS
-- **Backend:** Next.js API Routes
-- **Database:** SQLite with Prisma ORM
-- **Authentication:** JWT + bcryptjs
-- **AI Integration:** Jina AI Reader API
-- **Deployment:** Vercel
+---
 
-## 📦 Installation
+## 📦 Installation & Setup
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js v18+
 - npm or yarn
 
-### Setup
+### Clone & Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/itguykunal/link-saver.git
-   cd link-saver
+```bash
+git clone https://github.com/itguykunal/link-saver.git
+cd link-saver
+npm install
+````
+
+### Environment Variables
+
+Create `.env.local` file:
+
+```bash
+cp .env.example .env.local
+```
+
+Update your `.env.local`:
+
+```env
+JWT_SECRET=your-secret-key
+DATABASE_URL="file:./dev.db"
+```
+
+### Setup Prisma DB
+
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
+
+### Run Dev Server
+
+```bash
+npm run dev
+```
+
+Visit: [http://localhost:3000](http://localhost:3000)
+
+---
+
+## 🔧 API Endpoints
+
+| Method | Endpoint                 | Description             | Auth |
+| ------ | ------------------------ | ----------------------- | ---- |
+| POST   | `/api/auth/register`     | Register a user         | ❌    |
+| POST   | `/api/auth/login`        | Login and get JWT token | ❌    |
+| GET    | `/api/bookmarks`         | Fetch user's bookmarks  | ✅    |
+| POST   | `/api/bookmarks`         | Create a new bookmark   | ✅    |
+| DELETE | `/api/bookmarks?id={id}` | Delete a bookmark       | ✅    |
+
+---
+
+## 🧪 Running Tests
+
+```bash
+npm run test        # Run all tests
+npm run test:watch  # Watch mode
+```
+
+---
+
+## 📁 Project Structure
+
+```
+link-saver/
+├── src/
+│   ├── app/
+│   │   ├── api/           # API endpoints
+│   │   │   ├── auth/      # Login, register
+│   │   │   └── bookmarks/ # CRUD operations
+│   │   ├── page.tsx       # Home page
+│   │   └── layout.tsx     # Layout component
+│   ├── components/        # React UI components
+│   └── lib/               # Utility & helper functions
+├── prisma/                # Database schema & seed
+├── public/                # Static files
+└── tests/                 # Unit & integration tests
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/feature-name`)
+3. Commit your changes (`git commit -m "Add feature"`)
+4. Push to the branch (`git push origin feature/feature-name`)
+5. Open a Pull Request
+
+---
+
+## 🐛 Known Issues
+
+* SQLite resets on each Vercel deployment – use PostgreSQL in production
+* Jina AI API has a rate limit (\~60 requests/hr)
+
+---
+
+## 🚧 Roadmap
+
+* [ ] Tags & category filters
+* [ ] Browser extension
+* [ ] Bookmark export/import
+* [ ] Drag-and-drop sorting
+* [ ] Public/Shareable bookmarks
+* [ ] OAuth (Google/GitHub) login
+
+---
+
+## 📝 License
+
+This project is licensed under the **MIT License**.
+See the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Author
+
+**Kunal Krishna** – [@itguykunal](https://github.com/itguykunal)
+
+---
+
+## 🙏 Acknowledgments
+
+* [Jina AI](https://jina.ai/) for their free summarization API
+* [Vercel](https://vercel.com) for blazing-fast deployments
+* [Prisma](https://prisma.io), [Tailwind CSS](https://tailwindcss.com), and the [Next.js](https://nextjs.org) team for amazing tools
+
+---
+
+<div align="center">
+  🚀 Built with ❤️ by <a href="https://github.com/itguykunal">Kunal</a>
+</div>
+```
