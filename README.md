@@ -50,7 +50,7 @@
 ### Clone & Setup
 
 ```bash
-git clone https://github.com/itguykunal/link-saver.git
+git clone https://github.com/itguykunal/LinkSaver.git
 cd link-saver
 npm install
 ````
@@ -98,13 +98,6 @@ Visit: [http://localhost:3000](http://localhost:3000)
 | DELETE | `/api/bookmarks?id={id}` | Delete a bookmark       | ✅    |
 
 ---
-
-## 🧪 Running Tests
-
-```bash
-npm run test        # Run all tests
-npm run test:watch  # Watch mode
-```
 
 ---
 
