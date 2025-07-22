@@ -1,4 +1,3 @@
-````markdown
 # 🔖 Link Saver – AI-Powered Bookmark Manager
 
 <div align="center">
@@ -183,4 +182,3 @@ See the [LICENSE](LICENSE) file for details.
 <div align="center">
   🚀 Built with ❤️ by <a href="https://github.com/itguykunal">Kunal</a>
 </div>
-```
