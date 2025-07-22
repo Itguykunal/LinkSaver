@@ -1,8 +1,6 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Eye, EyeOff, Plus, Trash2, Search, Moon, Sun, ExternalLink } from 'lucide-react';
-import Image from 'next/image';
-import { getFaviconUrl } from '@/lib/favicon'
 
 interface User {
   id: number;
@@ -328,6 +326,41 @@ const AuthForm: React.FC<{ onLogin: (user: User, token: string) => void }> = ({ 
   );
 };
 
+// Custom FaviconImage component to handle image loading errors
+const FaviconImage: React.FC<{
+  src: string;
+  alt: string;
+  className: string;
+  onError: () => void;
+}> = ({ src, alt, className, onError }) => {
+  const [imageError, setImageError] = useState(false);
+
+  const handleError = () => {
+    setImageError(true);
+    onError();
+  };
+
+  if (imageError) {
+    return (
+      <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex-shrink-0 flex items-center justify-center">
+        <ExternalLink size={16} className="text-blue-600 dark:text-blue-400" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      width={32}
+      height={32}
+      onError={handleError}
+      onLoad={() => console.log('Favicon loaded:', src)}
+    />
+  );
+};
+
 const BookmarkCard: React.FC<{
   bookmark: Bookmark;
   onDelete: (id: number) => void;
@@ -338,20 +371,12 @@ const BookmarkCard: React.FC<{
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 p-6 border border-gray-200 dark:border-gray-700 group">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center space-x-3 flex-1 min-w-0">
-          {!imageError ? (
-            <Image
-              src={bookmark.favicon}
-              alt=""
-              width={32}
-              height={32}
-              className="rounded-full flex-shrink-0"
-              onError={() => setImageError(true)}
-            />
-          ) : (
-            <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex-shrink-0 flex items-center justify-center">
-              <ExternalLink size={16} className="text-blue-600 dark:text-blue-400" />
-            </div>
-          )}
+          <FaviconImage
+            src={bookmark.favicon}
+            alt=""
+            className="rounded-full flex-shrink-0"
+            onError={() => setImageError(true)}
+          />
           <div className="min-w-0 flex-1">
             <h3 className="font-semibold text-gray-900 dark:text-white truncate text-lg mb-1">
               {bookmark.title}
