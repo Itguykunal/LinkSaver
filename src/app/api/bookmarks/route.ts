@@ -62,7 +62,7 @@ export async function POST(request: Request) {
     data: {
       url,
       title,
-      favicon,
+      favicon: favicon || '',
       summary,
       userId: user.id
     }
