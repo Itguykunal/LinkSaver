@@ -35,6 +35,7 @@ async function main() {
         title: 'My GitHub Profile',
         favicon: 'https://github.com/favicon.ico',
         summary: 'GitHub is where people build software.',
+        status: 'completed',
         userId: demoUser.id
       },
       {
@@ -42,6 +43,7 @@ async function main() {
         title: 'My leetcode Profile',
         favicon: 'https://leetcode.com/favicon.ico',
         summary: 'LeetCode is the best platform to help you enhance your skills.',
+        status: 'completed',
         userId: demoUser.id
       },
       {
@@ -49,6 +51,7 @@ async function main() {
         title: 'My Linkedin Profile',
         favicon: 'https://linkedin.com/favicon.ico',
         summary: 'job searching, building a professional brand.',
+        status: 'completed',
         userId: demoUser.id
       }
     ]
