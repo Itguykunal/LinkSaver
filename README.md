@@ -10,8 +10,6 @@
 
 > Save your favorite links with automatic AI summaries and organize them with a clean, modern UI.
 
----
-
 ## ✨ Features
 
 - 🔐 **Secure Login & JWT Auth**
@@ -21,8 +19,6 @@
 - ⚡ **Realtime UI Updates**
 - 📱 **Mobile-Friendly Design**
 - 🧠 **Built with Clean, Scalable Tech Stack**
-
----
 
 ## 🚀 Live Demo
 
@@ -44,7 +40,6 @@
 | AI Summary   | **Jina AI Reader API**      |
 | Deployment   | **Vercel**                  |
 
----
 
 ## 📦 Installation & Setup
 
